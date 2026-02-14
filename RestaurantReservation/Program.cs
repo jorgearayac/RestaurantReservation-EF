@@ -1,2 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+using RestaurantReservation.Db.Context;
+
+using (var context = new RestaurantReservationDbContext())
+{
+    context.Database.EnsureCreated();
+}
