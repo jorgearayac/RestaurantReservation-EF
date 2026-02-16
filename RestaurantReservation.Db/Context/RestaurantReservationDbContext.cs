@@ -79,7 +79,7 @@ public class RestaurantReservationDbContext : DbContext
             entity.Property(e => e.Price)
                   .HasColumnType("decimal(10,2)");
 
-            entity.HasOne(e => e.Restaurants)
+            entity.HasOne(e => e.Restaurant)
                   .WithMany(r => r.MenuItems)
                   .HasForeignKey(e => e.RestaurantId);
         });
@@ -130,15 +130,15 @@ public class RestaurantReservationDbContext : DbContext
             entity.Property(e => e.PartySize)
                   .IsRequired();
 
-            entity.HasOne(e => e.Customers)
+            entity.HasOne(e => e.Customer)
                   .WithMany(c => c.Reservations)
                   .HasForeignKey(e => e.CustomerId);
 
-            entity.HasOne(e => e.Restaurants)
+            entity.HasOne(e => e.Restaurant)
                   .WithMany(r => r.Reservations)
                   .HasForeignKey(e => e.RestaurantId);
 
-            entity.HasOne(e => e.Tables)
+            entity.HasOne(e => e.Table)
                   .WithMany(t => t.Reservations)
                   .HasForeignKey(e => e.TableId);
         });
