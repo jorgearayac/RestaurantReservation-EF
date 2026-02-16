@@ -13,6 +13,6 @@ namespace RestaurantReservation.Db.Models
         public string Position { get; set; } = null!;
 
         public Restaurant Restaurant { get; set; } = null!;
-        public ICollection<Order> Order { get; set;} = new List<Order>();
+        public ICollection<Order> Orders { get; set;} = new List<Order>();
     }
 }

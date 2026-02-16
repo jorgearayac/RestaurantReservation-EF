@@ -13,9 +13,9 @@ namespace RestaurantReservation.Db.Models
         public DateTime ReservationDate { get; set; }
         public int PartySize { get; set; }
 
-        public Customer Customer { get; set; } = null!;
-        public Restaurant Restaurant { get; set; } = null!;
-        public Table Table { get; set; } = null!;
+        public Customer Customers { get; set; } = null!;
+        public Restaurant Restaurants { get; set; } = null!;
+        public Table Tables { get; set; } = null!;
         public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

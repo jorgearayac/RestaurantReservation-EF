@@ -12,7 +12,7 @@ namespace RestaurantReservation.Db.Models
         public string? Description { get; set; }
         public decimal Price { get; set; }
 
-        public Restaurant Restaurant { get; set; } = null!;
+        public Restaurant Restaurants { get; set; } = null!;
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

@@ -14,7 +14,7 @@ namespace RestaurantReservation.Db.Models
 
         public ICollection<Table> Tables { get; set; } = new List<Table>();
         public ICollection<Employee> Employees { get; set; } = new List<Employee>();
-        public ICollection<MenuItem> MenuItem { get; set; } = new List<MenuItem>();
+        public ICollection<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }
