@@ -81,7 +81,8 @@ public class RestaurantReservationDbContext : DbContext
 
             entity.HasOne(e => e.Restaurant)
                   .WithMany(r => r.MenuItems)
-                  .HasForeignKey(e => e.RestaurantId);
+                  .HasForeignKey(e => e.RestaurantId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
 
         // Employees configuration
@@ -103,7 +104,8 @@ public class RestaurantReservationDbContext : DbContext
 
             entity.HasOne(e => e.Restaurant)
                   .WithMany(r => r.Employees)
-                  .HasForeignKey(e => e.RestaurantId);
+                  .HasForeignKey(e => e.RestaurantId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
 
         // Tables configuration
@@ -116,7 +118,8 @@ public class RestaurantReservationDbContext : DbContext
 
             entity.HasOne(e => e.Restaurant)
                   .WithMany(r => r.Tables)
-                  .HasForeignKey(e => e.RestaurantId);
+                  .HasForeignKey(e => e.RestaurantId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
 
         // Reservations configuration
@@ -132,15 +135,18 @@ public class RestaurantReservationDbContext : DbContext
 
             entity.HasOne(e => e.Customer)
                   .WithMany(c => c.Reservations)
-                  .HasForeignKey(e => e.CustomerId);
+                  .HasForeignKey(e => e.CustomerId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(e => e.Restaurant)
                   .WithMany(r => r.Reservations)
-                  .HasForeignKey(e => e.RestaurantId);
+                  .HasForeignKey(e => e.RestaurantId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(e => e.Table)
                   .WithMany(t => t.Reservations)
-                  .HasForeignKey(e => e.TableId);
+                  .HasForeignKey(e => e.TableId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
 
         // Orders configuration
@@ -156,11 +162,13 @@ public class RestaurantReservationDbContext : DbContext
 
             entity.HasOne(e => e.Reservation)
                   .WithMany(r => r.Orders)
-                  .HasForeignKey(e => e.ReservationId);
+                  .HasForeignKey(e => e.ReservationId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(e => e.Employee)
                   .WithMany(emp => emp.Orders)
-                  .HasForeignKey(e => e.EmployeeId);
+                  .HasForeignKey(e => e.EmployeeId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
 
         // OrderItems configuration
@@ -173,11 +181,13 @@ public class RestaurantReservationDbContext : DbContext
 
             entity.HasOne(e => e.Order)
                   .WithMany(o => o.OrderItems)
-                  .HasForeignKey(e => e.OrderId);
+                  .HasForeignKey(e => e.OrderId)
+                  .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(e => e.MenuItem)
                   .WithMany(m => m.OrderItems)
-                  .HasForeignKey(e => e.ItemId);
+                  .HasForeignKey(e => e.ItemId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }
