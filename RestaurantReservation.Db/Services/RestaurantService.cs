@@ -53,5 +53,10 @@ namespace RestaurantReservation.Db.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<decimal?> CalculateTotalRevenueAsync(int restaurantId)
+        {
+            return await _context.CalculateRestaurantTotalRevenue(restaurantId);
+        }
     }
 }

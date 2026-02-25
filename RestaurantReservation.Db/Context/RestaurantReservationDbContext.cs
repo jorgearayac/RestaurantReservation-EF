@@ -215,8 +215,8 @@ public class RestaurantReservationDbContext : DbContext
         });
 
         // Database functions
-        modelBuilder
-            .HasDbFunction(() => CalculateRestaurantTotalRevenue(default));
+        //modelBuilder
+        //    .HasDbFunction(() => CalculateRestaurantTotalRevenue(default));
     }
     private void SeedData(ModelBuilder modelBuilder)
     {
