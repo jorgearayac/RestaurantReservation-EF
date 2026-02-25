@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Models.Views;
-using static RestaurantReservation.Db.Models.Views.EmployeeRestaurantDetailsView;
 
 
 namespace RestaurantReservation.Db.Context;
@@ -313,7 +312,7 @@ public class RestaurantReservationDbContext : DbContext
     /// </summary>
     /// <param name="minPartySize"></param>
     /// <returns></returns>
-    public async Task<List<Customer>> GetCustomersWithLargeReservations(int guests)
+    public async Task<List<Customer>> GetCustomersWithGreatPartySizeSP(int guests)
     {
         return await Customers
             .FromSqlRaw(

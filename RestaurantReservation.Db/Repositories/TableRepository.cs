@@ -2,13 +2,13 @@
 using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
 
-namespace RestaurantReservation.Db.Services
+namespace RestaurantReservation.Db.Repositories
 {
-    public class TableService
+    public class TableRepository
     {
         private readonly RestaurantReservationDbContext _context;
 
-        public TableService(RestaurantReservationDbContext context)
+        public TableRepository(RestaurantReservationDbContext context)
         {
             _context = context;
         }

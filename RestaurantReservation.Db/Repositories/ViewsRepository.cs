@@ -3,13 +3,13 @@ using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Models.Views;
 
-namespace RestaurantReservation.Db.Services
+namespace RestaurantReservation.Db.Repositories
 {
-    public class ViewsService
+    public class ViewsRepository
     {
         private readonly RestaurantReservationDbContext _context;
 
-        public ViewsService(RestaurantReservationDbContext context)
+        public ViewsRepository(RestaurantReservationDbContext context)
         {
             _context = context;
         }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
-using RestaurantReservation.Db.Services;
+using RestaurantReservation.Db.Repositories;
 using System.ComponentModel.DataAnnotations;
 
 class Program
@@ -13,14 +13,14 @@ class Program
         using var context = new RestaurantReservationDbContext();
         
         // Initialize services
-        var customerService = new CustomerService(context);
-        var employeeService = new EmployeeService(context);
-        var menuItemService = new MenuItemService(context);
-        var orderItemService = new OrderItemService(context);
-        var orderService = new OrderService(context);
-        var reservationService = new ReservationService(context);
-        var restaurantService = new RestaurantService(context);
-        var tableService = new TableService(context);
+        var customerService = new CustomerRepository(context);
+        var employeeService = new EmployeeRepository(context);
+        var menuItemService = new MenuItemRepository(context);
+        var orderItemService = new OrderItemRepository(context);
+        var orderService = new OrderRepository(context);
+        var reservationService = new ReservationRepository(context);
+        var restaurantService = new RestaurantRepository(context);
+        var tableService = new TableRepository(context);
 
         var newCustomer = new Customer { FirstName = "Async", LastName = "Await", Email = "async@test.cl", PhoneNumber = "555555555" };
         var newEmployee = new Employee { RestaurantId = 1, FirstName = "John", LastName = "Doe", Position = "Waiter" };
@@ -126,7 +126,7 @@ class Program
         Console.WriteLine();
         Console.WriteLine("Stored Procedures:");
         Console.WriteLine("--------");
-        var customers = await context.GetCustomersWithLargeReservations(6);
+        var customers = await context.GetCustomersWithGreatPartySizeSP(6);
 
         foreach (var customer in customers)
         {

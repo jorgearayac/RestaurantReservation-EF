@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
 
-namespace RestaurantReservation.Db.Services
+namespace RestaurantReservation.Db.Repositories
 {
-    public class CustomerService
+    public class CustomerRepository
     {
         private readonly RestaurantReservationDbContext _context;
 
-        public CustomerService(RestaurantReservationDbContext context)
+        public CustomerRepository(RestaurantReservationDbContext context)
         {
             _context = context;
         }
@@ -55,6 +55,11 @@ namespace RestaurantReservation.Db.Services
 
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<Customer>> GetCustomerWithGreatPartySizeSP(int guests)
+        {
+            return await _context.GetCustomersWithGreatPartySizeSP(guests);
         }
     }
 }

@@ -2,13 +2,13 @@
 using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
 
-namespace RestaurantReservation.Db.Services
+namespace RestaurantReservation.Db.Repositories
 {
-    public class RestaurantService
+    public class RestaurantRepository
     {
         private readonly RestaurantReservationDbContext _context;
 
-        public RestaurantService(RestaurantReservationDbContext context)
+        public RestaurantRepository(RestaurantReservationDbContext context)
         {
             _context = context;
         }
@@ -54,7 +54,7 @@ namespace RestaurantReservation.Db.Services
             return true;
         }
 
-        public async Task<decimal?> CalculateTotalRevenueAsync(int restaurantId)
+        public async Task<decimal> CalculateTotalRevenueAsync(int restaurantId)
         {
             return await _context.CalculateRestaurantTotalRevenue(restaurantId);
         }
