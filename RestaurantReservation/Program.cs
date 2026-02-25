@@ -122,5 +122,15 @@ class Program
 
         var revenue = await restaurantService.CalculateTotalRevenueAsync(1);
         Console.WriteLine($"Total revenue for restaurant ID {newRestaurant.RestaurantId}: {revenue:C}");
+
+        Console.WriteLine();
+        Console.WriteLine("Stored Procedures:");
+        Console.WriteLine("--------");
+        var customers = await context.GetCustomersWithLargeReservations(6);
+
+        foreach (var customer in customers)
+        {
+            Console.WriteLine($"{customer.FirstName} {customer.LastName}");
+        }
     }
 }

@@ -306,4 +306,19 @@ public class RestaurantReservationDbContext : DbContext
                 new SqlParameter("@restaurantId", restaurantId))
             .FirstAsync();
     }
+
+    /// <summary>
+    /// Method to find all customers who have made reservations with a party size greater than a specified number.
+    /// Executes the stored procedure sp_GetCustomersWithGreatPartySize.
+    /// </summary>
+    /// <param name="minPartySize"></param>
+    /// <returns></returns>
+    public async Task<List<Customer>> GetCustomersWithLargeReservations(int guests)
+    {
+        return await Customers
+            .FromSqlRaw(
+                "EXEC sp_GetCustomersWithGreatPartySize @Guests",
+                new SqlParameter("@Guests", guests))
+            .ToListAsync();
+    }
 }
