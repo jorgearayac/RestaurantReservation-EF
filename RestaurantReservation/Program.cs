@@ -1,4 +1,5 @@
-﻿using RestaurantReservation.Db.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Services;
 using System.ComponentModel.DataAnnotations;
@@ -114,5 +115,11 @@ class Program
 
         Console.WriteLine();
         Console.WriteLine("Demo completed. All create, update, and delete operations have been executed successfully.");
+
+        //Console.WriteLine();
+        //Console.WriteLine("Database functions:");
+        //Console.WriteLine("--------");
+        //var revenue = context.CalculateRestaurantTotalRevenue(newRestaurant.RestaurantId);
+        //Console.WriteLine($"Total revenue for restaurant ID {newRestaurant.RestaurantId}: {revenue:C}");
     }
 }

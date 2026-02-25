@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Models.Views;
 using static RestaurantReservation.Db.Models.Views.EmployeeRestaurantDetailsView;
@@ -212,6 +213,10 @@ public class RestaurantReservationDbContext : DbContext
             entity.HasNoKey();
             entity.ToView("View_EmployeeRestaurantDetails");
         });
+
+        // Database functions
+        modelBuilder
+            .HasDbFunction(() => CalculateRestaurantTotalRevenue(default));
     }
     private void SeedData(ModelBuilder modelBuilder)
     {
@@ -286,5 +291,19 @@ public class RestaurantReservationDbContext : DbContext
             new OrderItem { OrderItemId = 4, Quantity = 2, OrderId = 4, ItemId = 4 },
             new OrderItem { OrderItemId = 5, Quantity = 4, OrderId = 5, ItemId = 5 }
         );
+    }
+
+    /// <summary>
+    /// Database function to calculate the total revenue from a specific restaurant.
+    /// </summary>
+    /// <param name="restaurantId"></param>
+    /// <returns></returns>
+    public async Task<decimal> CalculateRestaurantTotalRevenue(int restaurantId)
+    {
+        return await Database
+            .SqlQueryRaw<decimal>(
+                "SELECT dbo.fn_CalculateRestaurantRevenue(@restaurantId)",
+                new SqlParameter("@restaurantId", restaurantId))
+            .FirstAsync();
     }
 }
