@@ -53,5 +53,16 @@ namespace RestaurantReservation.Db.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        /// <summary>
+        /// Retrieves all employees with the position of "Manager" from the database.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Employee>> ListManagers()
+        {
+            return await _context.Employees
+                .Where(e => e.Position == "Manager")
+                .ToListAsync();
+        }
     }
 }
