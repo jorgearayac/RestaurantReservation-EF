@@ -52,5 +52,19 @@ namespace RestaurantReservation.Db.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        /// <summary>
+        /// Method to get all reservations for a specific customer.
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns>
+        /// A list of reservations made by that particular customer.
+        /// </returns>
+        public async Task<List<Reservation>> GetReservationsByCustomer(int customerId)
+        {
+            return await _context.Reservations
+                .Where(r => r.CustomerId == customerId)
+                .ToListAsync();
+        }
     }
 }
