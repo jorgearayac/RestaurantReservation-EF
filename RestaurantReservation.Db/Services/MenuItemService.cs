@@ -52,5 +52,19 @@ namespace RestaurantReservation.Db.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        /// <summary>
+        /// Method that finds the menu items ordered in a given reservation.
+        /// </summary>
+        /// <param name="reservationId"></param>
+        /// <returns></returns>
+        public async Task<List<MenuItem>> ListOrderedMenuItems(int reservationId)
+        {
+            return await _context.OrderItems
+                .Where(oi => oi.Order.ReservationId == reservationId)
+                .Select(oi => oi.MenuItem)
+                .Distinct()
+                .ToListAsync();
+        }
     }
 }
