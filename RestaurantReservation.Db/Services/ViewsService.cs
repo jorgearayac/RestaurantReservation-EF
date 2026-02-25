@@ -15,12 +15,23 @@ namespace RestaurantReservation.Db.Services
         }
 
         /// <summary>
-        /// Method to retrieve all the reservations with their associated customer and restaurant information.
+        /// Method to retrieve all the reservations with their associated customer and restaurant details.
         /// </summary>
         /// <returns></returns>
         public async Task<List<ReservationDetailsView>> GetReservationDetails()
         {
             return await _context.ReservationDetailsView
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Method to retrieve employees with their associated restaurant details.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<EmployeeRestaurantDetailsView>> GetEmployeeRestaurantDetails()
+        {
+            return await _context.EmployeeRestaurantDetailsView
                 .AsNoTracking()
                 .ToListAsync();
         }
