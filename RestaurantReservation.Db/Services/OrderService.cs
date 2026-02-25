@@ -51,5 +51,19 @@ namespace RestaurantReservation.Db.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        /// <summary>
+        /// Method to list all orders placed on a specific reservation, including the menu items ordered.
+        /// </summary>
+        /// <param name="reservationId"></param>
+        /// <returns></returns>
+        public async Task<List<Order>> ListOrdersAndMenuItems(int reservationId)
+        {
+            return await _context.Orders
+                .Where(o => o.ReservationId == reservationId)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.MenuItem)
+                .ToListAsync();
+        }
     }
 }
