@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Models.Views;
+
 
 namespace RestaurantReservation.Db.Context;
 
@@ -13,6 +15,7 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Table> Tables { get; set; }
+    public DbSet<ReservationDetailsView> ReservationDetailsView { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -192,6 +195,13 @@ public class RestaurantReservationDbContext : DbContext
 
         // Seed data
         SeedData(modelBuilder);
+
+        // Views
+        modelBuilder.Entity<ReservationDetailsView>(entity =>
+        {
+            entity.HasNoKey();
+            entity.ToView("View_ReservationDetails");
+        });
     }
     private void SeedData(ModelBuilder modelBuilder)
     {

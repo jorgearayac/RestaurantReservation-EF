@@ -65,17 +65,5 @@ namespace RestaurantReservation.Db.Services
                     .ThenInclude(oi => oi.MenuItem)
                 .ToListAsync();
         }
-
-        /// <summary>
-        /// Method to calculate the average order amount for a specific employee.
-        /// </summary>
-        /// <param name="employeeId"></param>
-        /// <returns></returns>
-        public async Task<decimal> CalculateAverageOrderAmount(int employeeId)
-        {
-            return await _context.Orders
-                .Where(o => o.EmployeeId == employeeId)
-                .AverageAsync(o => o.TotalAmount);
-        }
     }
 }
