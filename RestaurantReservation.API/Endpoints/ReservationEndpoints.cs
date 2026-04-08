@@ -15,7 +15,7 @@ public static class ReservationEndpoints
         {
             var reservations = await repo.GetAll();
             return Results.Ok(reservations);
-        });
+        }).RequireAuthorization();
 
         // Read - Get reservation by ID
         app.MapGet("/api/reservations/{id}", async (ReservationRepository repo, int id) =>
@@ -27,14 +27,14 @@ public static class ReservationEndpoints
                 return Results.NotFound();
             }
             return Results.Ok(reservationById);
-        });
+        }).RequireAuthorization();
 
         // Create
         app.MapPost("/api/reservations", async (ReservationRepository repo, Reservation reservation) =>
         {
             var created = await repo.Create(reservation);
             return Results.Created($"/api/reservations/{created.ReservationId}", created);
-        });
+        }).RequireAuthorization();
 
         // Update
         app.MapPut("/api/reservations/{id}", async (ReservationRepository repo, int id, Reservation reservation) =>
@@ -51,7 +51,7 @@ public static class ReservationEndpoints
                 return Results.NotFound();
             }
             return Results.Ok(reservation);
-        });
+        }).RequireAuthorization();
 
         // Delete
         app.MapDelete("/api/reservations/{id}", async (ReservationRepository repo, int id) =>
@@ -63,7 +63,7 @@ public static class ReservationEndpoints
                 return Results.NotFound();
             }
             return Results.NoContent();
-        });
+        }).RequireAuthorization();
         #endregion CRUD Reservation Endpoints
 
         // Additional endpoints
@@ -71,30 +71,30 @@ public static class ReservationEndpoints
         {
             var managers = await repo.ListManagers();
             return Results.Ok(managers);
-        });
+        }).RequireAuthorization();
 
         app.MapGet("/api/reservations/customer/{customerId}", async (ReservationRepository repo, int customerId) =>
         {
             var reservationByCustomer = await repo.GetReservationsByCustomer(customerId);
             return Results.Ok(reservationByCustomer);
-        });
+        }).RequireAuthorization();
 
         app.MapGet("/api/reservations/{reservationId}/orders", async (OrderRepository orderRepo, int reservationId) =>
         {
             var listOrders = await orderRepo.ListOrdersAndMenuItems(reservationId);
             return Results.Ok(listOrders);
-        });
+        }).RequireAuthorization();
 
         app.MapGet("/api/reservations/{reservationId}/menu-items", async (MenuItemRepository menuRepo, int reservationId) =>
         {
             var listMenuItems = await menuRepo.ListOrderedMenuItems(reservationId);
             return Results.Ok(listMenuItems);
-        });
+        }).RequireAuthorization();
 
         app.MapGet("/api/employees/{employeeId}/average-order-amount", async (EmployeeRepository repo, int employeeId) =>
         {
             var averageOrderAmount = await repo.GetAverageOrderAmount(employeeId);
             return Results.Ok(averageOrderAmount);
-        });
+        }).RequireAuthorization();
     }
 }
