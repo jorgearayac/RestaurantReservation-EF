@@ -7,7 +7,7 @@ namespace RestaurantReservation.API.Endpoints;
 public static class ReservationEndpoints
 {
     // Extension method to map reservation endpoints to the WebApp
-    public static async Task MapReservationEndpoints(this WebApplication app)
+    public static void MapReservationEndpoints(this WebApplication app)
     {
         #region CRUD Reservation Endpoints
         // Read - Get all reservations
