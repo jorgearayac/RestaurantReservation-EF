@@ -8,6 +8,11 @@ namespace RestaurantReservation.Db.Context;
 
 public class RestaurantReservationDbContext : DbContext
 {
+    public RestaurantReservationDbContext(DbContextOptions<RestaurantReservationDbContext> options)
+    : base(options)
+    {
+    }
+
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
