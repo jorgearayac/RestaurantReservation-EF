@@ -25,7 +25,7 @@ public static class AuthenticationEndpoint
                 );
 
             return Results.Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token)});
-        });
+        }).AllowAnonymous();
     }
     record LoginRequest(string Username, string Password);
 }
