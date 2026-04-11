@@ -16,7 +16,13 @@ public static class ReservationEndpoints
         {
             var reservations = await repo.GetAll();
             return Results.Ok(reservations);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetAllReservations")
+            .WithSummary("Get all Reservations")
+            .WithDescription("Returns a list of all the reservations in the system")
+            .Produces<List<Reservation>>(200)
+            .Produces(401);
 
         // Read - Get reservation by ID
         app.MapGet("/api/reservations/{id}", async (ReservationRepository repo, int id) =>
@@ -28,7 +34,14 @@ public static class ReservationEndpoints
                 return Results.NotFound();
             }
             return Results.Ok(reservationById);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetReservationById")
+            .WithSummary("Get a reservation by ID")
+            .WithDescription("Returns a reservation by its ID")
+            .Produces<Reservation>(200)
+            .Produces(404)
+            .Produces(401);
 
         // Create
         app.MapPost("/api/reservations", async (ReservationRepository repo, Reservation reservation, ReservationValidator validator) =>
@@ -41,7 +54,14 @@ public static class ReservationEndpoints
 
             var created = await repo.Create(reservation);
             return Results.Created($"/api/reservations/{created.ReservationId}", created);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("CreateReservation")
+            .WithSummary("Create a reservation")
+            .WithDescription("Creates a new reservation in the system")
+            .Produces<Reservation>(201)
+            .Produces(400)
+            .Produces(401);
 
         // Update
         app.MapPut("/api/reservations/{id}", async (ReservationRepository repo, int id, Reservation reservation, ReservationValidator validator) =>
@@ -64,7 +84,15 @@ public static class ReservationEndpoints
                 return Results.NotFound();
             }
             return Results.Ok(reservation);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("UpdateReservation")
+            .WithSummary("Update a reservation")
+            .WithDescription("Updates an existing reservation in the system")
+            .Produces<Reservation>(200)
+            .Produces(400)
+            .Produces(404)
+            .Produces(401);
 
         // Delete
         app.MapDelete("/api/reservations/{id}", async (ReservationRepository repo, int id) =>
@@ -76,38 +104,77 @@ public static class ReservationEndpoints
                 return Results.NotFound();
             }
             return Results.NoContent();
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("DeleteReservation")
+            .WithSummary("Delete a reservation")
+            .WithDescription("Deletes an existing reservation in the system")
+            .Produces(204)
+            .Produces(404)
+            .Produces(401);
         #endregion CRUD Reservation Endpoints
 
         // Additional endpoints
+        #region Additional Endpoints
         app.MapGet("/api/employees/managers", async (EmployeeRepository repo) =>
         {
             var managers = await repo.ListManagers();
             return Results.Ok(managers);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetManagers")
+            .WithSummary("Get all managers")
+            .WithDescription("Returns a list of all managers")
+            .Produces<List<Employee>>(200)
+            .Produces(401);
 
         app.MapGet("/api/reservations/customer/{customerId}", async (ReservationRepository repo, int customerId) =>
         {
             var reservationByCustomer = await repo.GetReservationsByCustomer(customerId);
             return Results.Ok(reservationByCustomer);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetReservationsByCustomer")
+            .WithSummary("Get reservations by customer ID")
+            .WithDescription("Returns a list of reservations for a specific customer")
+            .Produces<List<Reservation>>(200)
+            .Produces(401);
 
         app.MapGet("/api/reservations/{reservationId}/orders", async (OrderRepository orderRepo, int reservationId) =>
         {
             var listOrders = await orderRepo.ListOrdersAndMenuItems(reservationId);
             return Results.Ok(listOrders);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetOrdersByReservation")
+            .WithSummary("Get orders by reservation ID")
+            .WithDescription("Returns a list of orders for a specific reservation")
+            .Produces<List<Order>>(200)
+            .Produces(401);
 
         app.MapGet("/api/reservations/{reservationId}/menu-items", async (MenuItemRepository menuRepo, int reservationId) =>
         {
             var listMenuItems = await menuRepo.ListOrderedMenuItems(reservationId);
             return Results.Ok(listMenuItems);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetMenuItemsByReservation")
+            .WithSummary("Get menu items by reservation ID")
+            .WithDescription("Returns a list of menu items for a specific reservation")
+            .Produces<List<MenuItem>>(200)
+            .Produces(401);
 
         app.MapGet("/api/employees/{employeeId}/average-order-amount", async (EmployeeRepository repo, int employeeId) =>
         {
             var averageOrderAmount = await repo.GetAverageOrderAmount(employeeId);
             return Results.Ok(averageOrderAmount);
-        }).RequireAuthorization();
+        })
+            .RequireAuthorization()
+            .WithName("GetAverageOrderAmount")
+            .WithSummary("Get average order amount by employee ID")
+            .WithDescription("Returns the average order amount for a specific employee. To do: Handle case when employee does not exist")
+            .Produces<decimal>(200)
+            .Produces(401);
+        #endregion Additional Endpoints
     }
 }
