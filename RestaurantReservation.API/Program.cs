@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantReservation.API.Endpoints;
+using RestaurantReservation.API.Validators;
 using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Repositories;
 using System.Text;
@@ -20,6 +21,8 @@ builder.Services.AddScoped<ReservationRepository>();
 builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<MenuItemRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<ReservationValidator>();
+
 
 // Authentication and Authorization
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

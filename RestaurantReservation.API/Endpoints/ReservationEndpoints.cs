@@ -1,5 +1,6 @@
 ﻿using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Repositories;
+using RestaurantReservation.API.Validators;
 
 namespace RestaurantReservation.API.Endpoints;
 
@@ -30,18 +31,30 @@ public static class ReservationEndpoints
         }).RequireAuthorization();
 
         // Create
-        app.MapPost("/api/reservations", async (ReservationRepository repo, Reservation reservation) =>
+        app.MapPost("/api/reservations", async (ReservationRepository repo, Reservation reservation, ReservationValidator validator) =>
         {
+            var validationResult = await validator.ValidateAsync(reservation);
+            if (!validationResult.IsValid)
+            {
+                return Results.BadRequest(validationResult.Errors);
+            }
+
             var created = await repo.Create(reservation);
             return Results.Created($"/api/reservations/{created.ReservationId}", created);
         }).RequireAuthorization();
 
         // Update
-        app.MapPut("/api/reservations/{id}", async (ReservationRepository repo, int id, Reservation reservation) =>
+        app.MapPut("/api/reservations/{id}", async (ReservationRepository repo, int id, Reservation reservation, ReservationValidator validator) =>
         {
             if (id != reservation.ReservationId)
             {
                 return Results.BadRequest("ID mismatch");
+            }
+
+            var validationResult = await validator.ValidateAsync(reservation);
+            if (!validationResult.IsValid)
+            {
+                return Results.BadRequest(validationResult.Errors);
             }
 
             var success = await repo.Update(reservation);
