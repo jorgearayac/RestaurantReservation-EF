@@ -8,6 +8,11 @@ namespace RestaurantReservation.Db.Context;
 
 public class RestaurantReservationDbContext : DbContext
 {
+    public RestaurantReservationDbContext(DbContextOptions<RestaurantReservationDbContext> options)
+    : base(options)
+    {
+    }
+
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
@@ -21,9 +26,10 @@ public class RestaurantReservationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-                "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = RestaurantReservationCore"
-            );
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = RestaurantReservationCore");
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

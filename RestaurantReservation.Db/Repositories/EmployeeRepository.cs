@@ -64,5 +64,19 @@ namespace RestaurantReservation.Db.Repositories
                 .Where(e => e.Position == "Manager")
                 .ToListAsync();
         }
+
+        /// <summary>
+        /// Retrieves the average order amount of orders for a specific employee.
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        public async Task<decimal> GetAverageOrderAmount(int employeeId)
+        {
+            return await _context.Employees
+                .Include(e => e.Orders)
+                .Where(e => e.EmployeeId == employeeId)
+                .SelectMany(e => e.Orders)
+                .AverageAsync(o => (decimal?)o.TotalAmount) ?? 0;
+        }
     }
 }
