@@ -7,6 +7,7 @@ using RestaurantReservation.API.Validators;
 using RestaurantReservation.Db.Context;
 using RestaurantReservation.Db.Repositories;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,10 @@ builder.Services.AddScoped<MenuItemRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<ReservationValidator>();
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 // Authentication and Authorization
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
