@@ -21,6 +21,7 @@ public static class AuthenticationEndpoint
             var token = new JwtSecurityToken(
                 issuer: configuration["JwtSettings:Issuer"],
                 audience: configuration["JwtSettings:Audience"],
+                expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: credentials
                 );
 
